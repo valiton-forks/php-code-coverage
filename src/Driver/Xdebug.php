@@ -25,6 +25,11 @@ final class Xdebug implements Driver
     private $cacheNumLines = [];
 
     /**
+     * @var bool
+     */
+    private $hasSupportForWhitelistFiltering = false;
+
+    /**
      * @throws RuntimeException
      */
     public function __construct()
@@ -36,6 +41,8 @@ final class Xdebug implements Driver
         if (!\ini_get('xdebug.coverage_enable')) {
             throw new RuntimeException('xdebug.coverage_enable=On has to be set in php.ini');
         }
+
+        $this->hasSupportForWhitelistFiltering = function_exists('xdebug_set_filter');
     }
 
     /**
@@ -67,7 +74,7 @@ final class Xdebug implements Driver
      */
     public function supportsWhitelistFiltering()
     {
-        return false;
+        return $this->hasSupportForWhitelistFiltering;
     }
 
     /**
