@@ -78,6 +78,14 @@ final class PHPDBG implements Driver
     }
 
     /**
+     * @return bool
+     */
+    public function supportsWhitelistFiltering()
+    {
+        return false;
+    }
+
+    /**
      * Convert phpdbg based data into the format CodeCoverage expects
      */
     private function detectExecutedLines(array $sourceLines, array $dbgData): array

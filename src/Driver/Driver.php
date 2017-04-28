@@ -45,4 +45,9 @@ interface Driver
      * Stop collection of code coverage information.
      */
     public function stop(): array;
+
+    /**
+     * @return bool
+     */
+    public function supportsWhitelistFiltering();
 }

@@ -299,7 +299,10 @@ final class CodeCoverage
             throw new RuntimeException;
         }
 
-        $this->applyWhitelistFilter($data);
+        if (!$this->driver->supportsWhitelistFiltering()) {
+            $this->applyWhitelistFilter($data);
+        }
+
         $this->applyIgnoredLinesFilter($data);
         $this->initializeFilesThatAreSeenTheFirstTime($data);
 

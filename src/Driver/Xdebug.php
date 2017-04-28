@@ -62,6 +62,19 @@ final class Xdebug implements Driver
         return $this->cleanup($data);
     }
 
+    /**
+     * @return bool
+     */
+    public function supportsWhitelistFiltering()
+    {
+        return false;
+    }
+
+    /**
+     * @param array $data
+     *
+     * @return array
+     */
     private function cleanup(array $data): array
     {
         foreach (\array_keys($data) as $file) {
