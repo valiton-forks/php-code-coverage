@@ -42,7 +42,7 @@ final class Xdebug implements Driver
             throw new RuntimeException('xdebug.coverage_enable=On has to be set in php.ini');
         }
 
-        $this->hasSupportForWhitelistFiltering = function_exists('xdebug_set_filter');
+        $this->hasSupportForWhitelistFiltering = \function_exists('xdebug_set_filter');
     }
 
     /**
