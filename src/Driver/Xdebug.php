@@ -69,10 +69,7 @@ final class Xdebug implements Driver
         return $this->cleanup($data);
     }
 
-    /**
-     * @return bool
-     */
-    public function supportsWhitelistFiltering()
+    public function supportsWhitelistFiltering(): bool
     {
         return $this->hasSupportForWhitelistFiltering;
     }

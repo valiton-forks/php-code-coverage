@@ -77,10 +77,7 @@ final class PHPDBG implements Driver
         return $this->detectExecutedLines($fetchedLines, $dbgData);
     }
 
-    /**
-     * @return bool
-     */
-    public function supportsWhitelistFiltering()
+    public function supportsWhitelistFiltering(): bool
     {
         return false;
     }
