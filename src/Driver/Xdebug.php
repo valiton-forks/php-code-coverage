@@ -27,7 +27,7 @@ final class Xdebug implements Driver
     /**
      * @var bool
      */
-    private $hasSupportForWhitelistFiltering = false;
+    private $hasSupportForWhitelistFiltering;
 
     /**
      * @throws RuntimeException
