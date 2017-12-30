@@ -83,6 +83,14 @@ final class PHPDBG implements Driver
     }
 
     /**
+     * @throws RuntimeException
+     */
+    public function setWhitelistedFiles(array $whitelistedFiles): void
+    {
+        throw new RuntimeException('PHPDBG does not support whitelist filtering');
+    }
+
+    /**
      * Convert phpdbg based data into the format CodeCoverage expects
      */
     private function detectExecutedLines(array $sourceLines, array $dbgData): array

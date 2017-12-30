@@ -74,11 +74,11 @@ final class Xdebug implements Driver
         return $this->hasSupportForWhitelistFiltering;
     }
 
-    /**
-     * @param array $data
-     *
-     * @return array
-     */
+    public function setWhitelistedFiles(array $whitelistedFiles): void
+    {
+        \xdebug_set_filter(XDEBUG_FILTER_CODE_COVERAGE, XDEBUG_PATH_WHITELIST, $whitelistedFiles);
+    }
+
     private function cleanup(array $data): array
     {
         foreach (\array_keys($data) as $file) {

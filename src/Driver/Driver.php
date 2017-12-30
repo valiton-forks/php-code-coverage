@@ -50,4 +50,9 @@ interface Driver
      * Returns true if whitelist filtering is supported.
      */
     public function supportsWhitelistFiltering(): bool;
+
+    /**
+     * Sets the whitelist.
+     */
+    public function setWhitelistedFiles(array $whitelistedFiles): void;
 }
