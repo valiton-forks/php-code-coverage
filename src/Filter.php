@@ -116,7 +116,7 @@ final class Filter
      *
      * @return string[]
      */
-    public function getWhitelist(): array
+    public function getWhitelistedFiles(): array
     {
         return \array_keys($this->whitelistedFiles);
     }
@@ -134,7 +134,7 @@ final class Filter
      *
      * @return string[]
      */
-    public function getWhitelistedFiles(): array
+    public function getWhitelist(): array
     {
         return $this->whitelistedFiles;
     }
@@ -142,7 +142,7 @@ final class Filter
     /**
      * Sets the whitelisted files.
      */
-    public function setWhitelistedFiles(array $whitelistedFiles): void
+    public function setWhitelist(array $whitelistedFiles): void
     {
         $this->whitelistedFiles = $whitelistedFiles;
     }

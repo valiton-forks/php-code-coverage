@@ -33,7 +33,7 @@ $filter->setWhitelistedFiles(%s);
 return $coverage;',
             \var_export($coverage->getData(true), 1),
             \var_export($coverage->getTests(), 1),
-            \var_export($filter->getWhitelistedFiles(), 1)
+            \var_export($filter->getWhitelist(), 1)
         );
 
         if ($target !== null) {

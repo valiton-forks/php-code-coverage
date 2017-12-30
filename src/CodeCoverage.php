@@ -370,8 +370,8 @@ final class CodeCoverage
      */
     public function merge(self $that): void
     {
-        $this->filter->setWhitelistedFiles(
-            \array_merge($this->filter->getWhitelistedFiles(), $that->filter()->getWhitelistedFiles())
+        $this->filter->setWhitelist(
+            \array_merge($this->filter->getWhitelist(), $that->filter()->getWhitelist())
         );
 
         foreach ($that->data as $file => $lines) {
@@ -550,7 +550,7 @@ final class CodeCoverage
     {
         $data           = [];
         $uncoveredFiles = \array_diff(
-            $this->filter->getWhitelist(),
+            $this->filter->getWhitelistedFiles(),
             \array_keys($this->data)
         );
 
@@ -905,7 +905,7 @@ final class CodeCoverage
 
             $this->driver->start();
 
-            foreach ($this->filter->getWhitelist() as $file) {
+            foreach ($this->filter->getWhitelistedFiles() as $file) {
                 if ($this->filter->isFile($file)) {
                     include_once $file;
                 }

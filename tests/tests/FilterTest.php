@@ -83,7 +83,7 @@ class FilterTest extends TestCase
 
         $this->assertEquals(
             [$this->files[0]],
-            $this->filter->getWhitelist()
+            $this->filter->getWhitelistedFiles()
         );
     }
 
@@ -96,7 +96,7 @@ class FilterTest extends TestCase
         $this->filter->addFileToWhitelist($this->files[0]);
         $this->filter->removeFileFromWhitelist($this->files[0]);
 
-        $this->assertEquals([], $this->filter->getWhitelist());
+        $this->assertEquals([], $this->filter->getWhitelistedFiles());
     }
 
     /**
@@ -108,7 +108,7 @@ class FilterTest extends TestCase
     {
         $this->filter->addDirectoryToWhitelist(TEST_FILES_PATH);
 
-        $whitelist = $this->filter->getWhitelist();
+        $whitelist = $this->filter->getWhitelistedFiles();
         sort($whitelist);
 
         $this->assertEquals($this->files, $whitelist);
@@ -129,7 +129,7 @@ class FilterTest extends TestCase
 
         $this->filter->addFilesToWhitelist($files);
 
-        $whitelist = $this->filter->getWhitelist();
+        $whitelist = $this->filter->getWhitelistedFiles();
         sort($whitelist);
 
         $this->assertEquals($this->files, $whitelist);
@@ -145,7 +145,7 @@ class FilterTest extends TestCase
         $this->filter->addDirectoryToWhitelist(TEST_FILES_PATH);
         $this->filter->removeDirectoryFromWhitelist(TEST_FILES_PATH);
 
-        $this->assertEquals([], $this->filter->getWhitelist());
+        $this->assertEquals([], $this->filter->getWhitelistedFiles());
     }
 
     /**
