@@ -10,6 +10,7 @@
 
 namespace SebastianBergmann\CodeCoverage\Driver;
 
+use SebastianBergmann\CodeCoverage\Filter;
 use SebastianBergmann\CodeCoverage\RuntimeException;
 
 /**
@@ -28,6 +29,11 @@ final class Xdebug implements Driver
      * @var bool
      */
     private $hasSupportForWhitelistFiltering;
+
+    /**
+     * @var Filter
+     */
+    private $filter;
 
     /**
      * @throws RuntimeException
@@ -50,6 +56,10 @@ final class Xdebug implements Driver
      */
     public function start(bool $determineUnusedAndDead = true): void
     {
+        if ($this->supportsWhitelistFiltering()) {
+            \xdebug_set_filter(XDEBUG_FILTER_CODE_COVERAGE, XDEBUG_PATH_WHITELIST, $this->filter->getWhitelistedFiles());
+        }
+
         if ($determineUnusedAndDead) {
             \xdebug_start_code_coverage(XDEBUG_CC_UNUSED | XDEBUG_CC_DEAD_CODE);
         } else {
@@ -74,9 +84,9 @@ final class Xdebug implements Driver
         return $this->hasSupportForWhitelistFiltering;
     }
 
-    public function setWhitelistedFiles(array $whitelistedFiles): void
+    public function setFilter(Filter $filter): void
     {
-        \xdebug_set_filter(XDEBUG_FILTER_CODE_COVERAGE, XDEBUG_PATH_WHITELIST, $whitelistedFiles);
+        $this->filter = $filter;
     }
 
     private function cleanup(array $data): array

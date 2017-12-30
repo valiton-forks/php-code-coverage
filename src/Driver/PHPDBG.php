@@ -10,6 +10,7 @@
 
 namespace SebastianBergmann\CodeCoverage\Driver;
 
+use SebastianBergmann\CodeCoverage\Filter;
 use SebastianBergmann\CodeCoverage\RuntimeException;
 
 /**
@@ -85,7 +86,7 @@ final class PHPDBG implements Driver
     /**
      * @throws RuntimeException
      */
-    public function setWhitelistedFiles(array $whitelistedFiles): void
+    public function setFilter(Filter $filter): void
     {
         throw new RuntimeException('PHPDBG does not support whitelist filtering');
     }

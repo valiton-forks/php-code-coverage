@@ -153,7 +153,7 @@ final class CodeCoverage
         $this->wizard = new Wizard;
 
         if ($this->driver->supportsWhitelistFiltering()) {
-            $this->driver->setWhitelistedFiles($this->filter->getWhitelistedFiles());
+            $this->driver->setFilter($this->filter);
         }
     }
 

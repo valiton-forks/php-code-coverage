@@ -10,6 +10,8 @@
 
 namespace SebastianBergmann\CodeCoverage\Driver;
 
+use SebastianBergmann\CodeCoverage\Filter;
+
 /**
  * Interface for code coverage drivers.
  */
@@ -52,7 +54,7 @@ interface Driver
     public function supportsWhitelistFiltering(): bool;
 
     /**
-     * Sets the whitelist.
+     * Sets the filter.
      */
-    public function setWhitelistedFiles(array $whitelistedFiles): void;
+    public function setFilter(Filter $filter): void;
 }
