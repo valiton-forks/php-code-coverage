@@ -46,5 +46,8 @@ interface Driver
      */
     public function stop(): array;
 
+    /**
+     * Returns true if whitelist filtering is supported.
+     */
     public function supportsWhitelistFiltering(): bool;
 }
