@@ -151,6 +151,10 @@ final class CodeCoverage
         $this->filter = $filter;
 
         $this->wizard = new Wizard;
+
+        if ($this->driver->supportsWhitelistFiltering()) {
+            $this->driver->setWhitelistedFiles($this->filter->getWhitelistedFiles());
+        }
     }
 
     /**
