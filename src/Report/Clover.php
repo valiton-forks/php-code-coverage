@@ -28,6 +28,7 @@ final class Clover
 
         $xmlCoverage = $xmlDocument->createElement('coverage');
         $xmlCoverage->setAttribute('generated', (int) $_SERVER['REQUEST_TIME']);
+        $xmlCoverage->setAttribute('clover', '4.1.2');
         $xmlDocument->appendChild($xmlCoverage);
 
         $xmlProject = $xmlDocument->createElement('project');
