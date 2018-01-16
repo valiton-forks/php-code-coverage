@@ -21,29 +21,52 @@ class CloverTest extends TestCase
     {
         $clover = new Clover;
 
-        $this->assertStringMatchesFormatFile(
-            TEST_FILES_PATH . 'BankAccount-clover.xml',
-            $clover->process($this->getCoverageForBankAccount(), null, 'BankAccount')
-        );
+        $xml = $clover->process($this->getCoverageForBankAccount(), null, 'BankAccount');
+
+        $this->assertStringMatchesFormatFile(TEST_FILES_PATH . 'BankAccount-clover.xml', $xml);
+
+        $this->validate($xml);
     }
 
     public function testCloverForFileWithIgnoredLines()
     {
         $clover = new Clover;
 
-        $this->assertStringMatchesFormatFile(
-            TEST_FILES_PATH . 'ignored-lines-clover.xml',
-            $clover->process($this->getCoverageForFileWithIgnoredLines())
-        );
+        $xml = $clover->process($this->getCoverageForFileWithIgnoredLines());
+
+        $this->assertStringMatchesFormatFile(TEST_FILES_PATH . 'ignored-lines-clover.xml', $xml);
+
+        $this->validate($xml);
     }
 
     public function testCloverForClassWithAnonymousFunction()
     {
         $clover = new Clover;
 
-        $this->assertStringMatchesFormatFile(
-            TEST_FILES_PATH . 'class-with-anonymous-function-clover.xml',
-            $clover->process($this->getCoverageForClassWithAnonymousFunction())
-        );
+        $xml = $clover->process($this->getCoverageForClassWithAnonymousFunction());
+
+        $this->assertStringMatchesFormatFile(TEST_FILES_PATH . 'class-with-anonymous-function-clover.xml', $xml);
+
+        $this->validate($xml);
+    }
+
+    private function validate(string $xml): void
+    {
+        $document = new \DOMDocument;
+        $document->loadXML($xml);
+
+        libxml_use_internal_errors(true);
+
+        if (!$document->schemaValidate(__DIR__ . '/../_files/clover.xsd')) {
+            $buffer = 'Validation against clover.xsd failed:' . PHP_EOL;
+
+            foreach (libxml_get_errors() as $error) {
+                $buffer .= $error->message;
+            }
+
+            libxml_clear_errors();
+
+            throw new \RuntimeException($buffer);
+        }
     }
 }
