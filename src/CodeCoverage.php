@@ -419,15 +419,24 @@ class CodeCoverage
                 continue;
             }
 
-            foreach ($lines as $line => $data) {
-                if ($data !== null) {
-                    if (!isset($this->data[$file][$line])) {
-                        $this->data[$file][$line] = $data;
-                    } else {
-                        $this->data[$file][$line] = \array_unique(
-                            \array_merge($this->data[$file][$line], $data)
-                        );
-                    }
+            // we should compare the lines if any of two contains data
+            $compareLineNumbers = \array_unique(
+                \array_merge(
+                    \array_keys($this->data[$file]),
+                    \array_keys($that->data[$file])
+                )
+            );
+
+            foreach ($compareLineNumbers as $line) {
+                $thatPriority = $this->getLinePriority($that->data[$file], $line);
+                $thisPriority = $this->getLinePriority($this->data[$file], $line);
+
+                if ($thatPriority > $thisPriority) {
+                    $this->data[$file][$line] = $that->data[$file][$line];
+                } elseif ($thatPriority === $thisPriority && \is_array($this->data[$file][$line])) {
+                    $this->data[$file][$line] = \array_unique(
+                        \array_merge($this->data[$file][$line], $that->data[$file][$line])
+                    );
                 }
             }
         }
@@ -437,11 +446,33 @@ class CodeCoverage
     }
 
     /**
-     * @param bool $flag
+     * Determine the priority for a line
      *
-     * @throws InvalidArgumentException
+     * 1 = the line is not set
+     * 2 = the line has not been tested
+     * 3 = the line is dead code
+     * 4 = the line has been tested
+     *
+     * During a merge, a higher number is better.
+     *
+     * @param array $data
+     * @param int $line
+     * @return int
      */
-    public function setCacheTokens($flag)
+    protected function getLinePriority($data, $line)
+    {
+        if (!\array_key_exists($line, $data)) {
+            return 1;
+        } elseif (\is_array($data[$line]) && \count($data[$line]) === 0) {
+            return 2;
+        } elseif ($data[$line] === null) {
+            return 3;
+        }
+
+        return 4;
+    }
+
+    public function setCacheTokens(bool $flag): void
     {
         if (!\is_bool($flag)) {
             throw InvalidArgumentException::create(
