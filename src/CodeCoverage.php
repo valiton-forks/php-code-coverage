@@ -472,7 +472,7 @@ class CodeCoverage
         return 4;
     }
 
-    public function setCacheTokens(bool $flag): void
+    public function setCacheTokens(bool $flag)
     {
         if (!\is_bool($flag)) {
             throw InvalidArgumentException::create(
